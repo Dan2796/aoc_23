@@ -5,28 +5,26 @@ class Day01(Boolean actual) : Day(actual)
     public override int GetDay() {
         return 1;
     }
-    List<string> input = new List<string>();
-    List<List<int>> inputDigits = new List<List<int>>();
+    readonly List<string> input = [];
+    readonly List<List<int>> inputDigits = [];
 
     public override void ParseInput() {
 
-        using (StreamReader reader = new StreamReader(GetFileName()))
-        { 
-            while (!reader.EndOfStream)
+        using StreamReader reader = new(GetFileName());
+        while (!reader.EndOfStream)
+        {
+            string inputLine = reader.ReadLine();
+            input.Add(inputLine);
+            List<int> justDigits = [];
+            foreach (char c in inputLine)
             {
-              string inputLine = reader.ReadLine();
-              input.Add(inputLine);
-              List<int> justDigits = new List<int>();
-              foreach (char c in inputLine)
-              {
                 if (Char.IsDigit(c))
                 {
-                  int charAsDigit = c - '0';
-                  justDigits.Add(charAsDigit);
+                    int charAsDigit = c - '0';
+                    justDigits.Add(charAsDigit);
                 }
-              }
-              inputDigits.Add(justDigits);
             }
+            inputDigits.Add(justDigits);
         }
     }
     
@@ -34,7 +32,7 @@ class Day01(Boolean actual) : Day(actual)
       int calibrationSum = 0;
       foreach (List<int> digitLine in inputDigits) {
         calibrationSum +=  digitLine[0] * 10;
-        calibrationSum +=  digitLine[digitLine.Count - 1];
+        calibrationSum +=  digitLine[^1];
       }
       return calibrationSum.ToString();
     }
