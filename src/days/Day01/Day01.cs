@@ -12,9 +12,20 @@ class Day01(Boolean actual) : Day(actual)
     public override void ParseInput()
     {
 
+        string[] wordToNumbers = [
+          "zero",
+          "one",
+          "two",
+          "three",
+          "four",
+          "five",
+          "six",
+          "seven",
+          "eight",
+          "nine",
+        ];
+
         using StreamReader reader = new(GetFileName());
-        // Only need to check if found part 2, since if found part 1 then have 
-        // also found part 2 by definition
         while (!reader.EndOfStream)
         {
             string inputLine = reader.ReadLine();
@@ -22,57 +33,28 @@ class Day01(Boolean actual) : Day(actual)
             {
               continue;
             }
-            CalibrationTracker calibrationTracker = new();
+            DigitsTracker digitsTracker = new();
             for (int i = 0; i < inputLine.Length; i++)
             {
+              // Update both parts if it is a single digit: 
               if (Char.IsDigit(inputLine[i])) {
-                calibrationTracker.UpdateDigits(inputLine[i] - '0');
+                digitsTracker.UpdateDigitsBothParts(inputLine[i] - '0');
               }
-              if (CalibrationTracker.CheckStringMatch(i, "zero", inputLine)) 
+              // Update just part 2 if there is a number word match:
+              for (int j = 0; j < wordToNumbers.Length; j++)
               {
-                calibrationTracker.UpdatePart2Digits(0);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "one", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(1);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "two", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(2);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "three", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(3);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "four", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(4);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "five", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(5);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "six", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(6);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "seven", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(7);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "eight", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(8);
-              }
-              if (CalibrationTracker.CheckStringMatch(i, "nine", inputLine))
-              {
-                calibrationTracker.UpdatePart2Digits(9);
+                digitsTracker.CheckStringAndUpdateP2(
+                  i,
+                  inputLine,
+                  wordToNumbers[j],
+                  j
+                );
               }
             }
-            calibrationNumbersP1.Add([calibrationTracker.GetFirstDigitP1(),
-                                      calibrationTracker.GetSecondDigitP1()]);
-            calibrationNumbersP2.Add([calibrationTracker.GetFirstDigitP2(),
-                                      calibrationTracker.GetSecondDigitP2()]);
+            calibrationNumbersP1.Add([digitsTracker.GetFirstDigitP1(),
+                                      digitsTracker.GetSecondDigitP1()]);
+            calibrationNumbersP2.Add([digitsTracker.GetFirstDigitP2(),
+                                      digitsTracker.GetSecondDigitP2()]);
         }
     }
     
