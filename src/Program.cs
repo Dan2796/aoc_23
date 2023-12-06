@@ -8,7 +8,7 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            Day.PrintSolutions(new Day01(true));
+            Day.PrintSolutions(new Day02(false));
         }
     }
 }

@@ -1,6 +1,5 @@
-using System.Data;
-
-namespace aoc_2023.src.days {
+namespace aoc_2023.src.days
+{
     public class DigitsTracker
     {
         int first_digit_p1;
