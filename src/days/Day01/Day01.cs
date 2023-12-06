@@ -133,8 +133,6 @@ class Day01(Boolean actual) : Day(actual)
             }
             calibrationNumbersP1.Add([first_digit_p1, second_digit_p1]);
             calibrationNumbersP2.Add([first_digit_p2, second_digit_p2]);
-            Console.WriteLine("Line " + inputLine);
-            Console.WriteLine("First: " + first_digit_p2 + " Second: " + second_digit_p2);
         }
     }
     
