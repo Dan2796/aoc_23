@@ -1,40 +1,41 @@
-using System.Reflection.Metadata;
 using aoc_2023.src.days;
 
-class Day02(Boolean actual) : Day(actual)
+namespace aoc_2023.days.Day02;
+
+internal class Day02(bool actual) : Day(actual)
 {
-    public override int GetDay() {
+    protected override int GetDay() {
         return 2;
     }
 
-    List<Game> allGames = [];
+    private readonly List<DayGame> _allGames = [];
 
-    public override void ParseInput() {
+    protected override void ParseInput() {
         using StreamReader reader = new(GetFileName());
         while (!reader.EndOfStream)
         {
             string inputLine = reader.ReadLine()[5..];
             string[] inputLineSplit = inputLine.Split(':');
-            Game game = new(int.Parse(inputLineSplit[0]));
+            DayGame game = new(int.Parse(inputLineSplit[0]));
             string[] shows = inputLineSplit[1].Split(";");
             foreach (string show in shows) {
                 string[] ballsShown = show.Split(",");
-                Show myShow = new();
+                DayShow myShow = new();
                 foreach (string ball in ballsShown) {
                     // Index from second character to remove prepended space
                     string[] ballNumberAndColour = ball[1..].Split(" ");
                     myShow.AddColourInfo(int.Parse(ballNumberAndColour[0]),
-                                                   ballNumberAndColour[1]);
+                        ballNumberAndColour[1]);
                 }
                 game.AddShow(myShow);
             }
-            allGames.Add(game);
+            _allGames.Add(game);
         }
     }
 
-    public override String GetSolutionPart1() {
+    protected override String GetSolutionPart1() {
         int possibleIdsSum = 0;
-        foreach (Game game in allGames) {
+        foreach (DayGame game in _allGames) {
             if (game.CheckPossible(14, 12, 13)) {
                 possibleIdsSum += game.GetId();
             }
@@ -42,9 +43,9 @@ class Day02(Boolean actual) : Day(actual)
         return possibleIdsSum.ToString();
     }
 
-    public override String GetSolutionPart2() {
+    protected override String GetSolutionPart2() {
         int powerSum = 0;
-        foreach (Game game in allGames) {
+        foreach (DayGame game in _allGames) {
             powerSum += game.PowerOfFewestPossibleCubes();
         }
         return powerSum.ToString();

@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Collections;
+﻿using aoc_2023.days.Day02;
 
-namespace AdventOfCode
+namespace aoc_2023;
+
+internal abstract class DayProgram
 {
-    class Program
+    private static void Main()
     {
-        static void Main(string[] args)
-        {
-            Day.PrintSolutions(new Day02(true));
-        }
+        Day.PrintSolutions(new Day02(true));
     }
 }

@@ -1,15 +1,16 @@
+using aoc_2023;
 using aoc_2023.src.days;
 
 class Day01(Boolean actual) : Day(actual)
 {
-    public override int GetDay()
+  protected override int GetDay()
     {
         return 1;
     }
     readonly List<int[]> calibrationNumbersP1 = [];
     readonly List<int[]> calibrationNumbersP2 = [];
 
-    public override void ParseInput()
+    protected override void ParseInput()
     {
 
         string[] wordToNumbers = [
@@ -57,8 +58,8 @@ class Day01(Boolean actual) : Day(actual)
                                       digitsTracker.GetSecondDigitP2()]);
         }
     }
-    
-    public override string GetSolutionPart1()
+
+    protected override string GetSolutionPart1()
     {
       int calibrationSum = 0;
       foreach (int[] digits in calibrationNumbersP1)
@@ -69,7 +70,7 @@ class Day01(Boolean actual) : Day(actual)
       return calibrationSum.ToString();
     }
 
-    public override String GetSolutionPart2()
+    protected override String GetSolutionPart2()
     {
       int calibrationSum = 0;
       foreach (int[] digits in calibrationNumbersP2)

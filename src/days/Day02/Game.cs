@@ -1,78 +1,77 @@
-using System.Reflection.Metadata;
+namespace aoc_2023.days.Day02;
 
-namespace aoc_2023.src.days
+public class DayGame(int id)
 {
-    public class Game(int __id)
+    readonly List<DayShow> allShows = [];
+    public void AddShow(DayShow show)
     {
-        private readonly int __id = __id;
-        readonly List<Show> allShows = [];
-        public void AddShow(Show show)
+        allShows.Add(show);
+    }
+    public int GetId()
+    {
+        return id;
+    }
+    public bool CheckPossible(int blue, int red, int green)
+    {
+        foreach (DayShow show in allShows)
         {
-            this.allShows.Add(show);
-        }
-        public int GetId()
-        {
-            return __id;
-        }
-        public bool CheckPossible(int blue, int red, int green)
-        {
-            foreach (Show show in this.allShows)
+            if (blue < show.GetBlue()
+                || red < show.GetRed()
+                || green < show.GetGreen())
             {
-                if (blue < show.GetBlue()
-                    || red < show.GetRed()
-                    || green < show.GetGreen())
-                    {
-                    return false;
-                    }
+                return false;
             }
-            return true;
         }
-        public int PowerOfFewestPossibleCubes()
+        return true;
+    }
+    public int PowerOfFewestPossibleCubes()
+    {
+        int blueMin = 0;
+        int redMin = 0;
+        int greenMin = 0;
+        foreach (DayShow show in allShows)
         {
-            int blueMin = 0;
-            int redMin = 0;
-            int greenMin = 0;
-            foreach (Show show in this.allShows)
-            {
-                blueMin = show.GetBlue() > blueMin ? show.GetBlue() : blueMin;
-                redMin = show.GetRed() > redMin ? show.GetRed() : redMin;
-                greenMin = show.GetGreen() > greenMin ? show.GetGreen() : greenMin;
+            blueMin = show.GetBlue() > blueMin ? show.GetBlue() : blueMin;
+            redMin = show.GetRed() > redMin ? show.GetRed() : redMin;
+            greenMin = show.GetGreen() > greenMin ? show.GetGreen() : greenMin;
 
-            }
-            return blueMin * redMin * greenMin;
+        }
+        return blueMin * redMin * greenMin;
+    }
+}
+
+
+public class DayShow
+{
+    // Starting assumption is there aren't any shown:
+    private int _blue = 0;
+    private int _red = 0;
+    private int _green = 0;
+    public void AddColourInfo(int number, string colour) {
+        switch (colour)
+        {
+            case "blue":
+                _blue = number;
+                break;
+            case "red":
+                _red = number;
+                break;
+            case "green":
+                _green = number;
+                break;
         }
     }
-
-
-    public class Show
+    public int GetBlue()
     {
-        // Starting assumption is there aren't any shown:
-        private int blue = 0;
-        private int red = 0;
-        private int green = 0;
-        public void AddColourInfo(int number, string colour) {
-            if (colour == "blue") {
-                this.blue = number;
-            }
-            if (colour == "red") {
-                this.red = number;
-            }
-            if (colour == "green") {
-                this.green = number;
-            }
-        }
-        public int GetBlue()
-        {
-            return this.blue;
-        }
-        public int GetRed()
-        {
-            return this.red;
-        }
-        public int GetGreen()
-        {
-            return this.green;
-        }
-
+        return _blue;
     }
+    public int GetRed()
+    {
+        return _red;
+    }
+    public int GetGreen()
+    {
+        return _green;
+    }
+
 }

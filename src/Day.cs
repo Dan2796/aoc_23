@@ -1,22 +1,21 @@
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
+namespace aoc_2023;
 
-public abstract class Day(Boolean actual)
+public abstract class Day(bool actual)
 {
-    public String GetFileName() {
-        String dirLocation = actual ? "actual" : "example";
-        String dayPrefix = this.GetDay() < 10 ? "0" : "";
-        return "inputs/" + dirLocation + "/day_" + dayPrefix + this.GetDay() + ".txt";
+    protected string GetFileName() {
+        var dirLocation = actual ? "actual" : "example";
+        var dayPrefix = GetDay() < 10 ? "0" : "";
+        return "inputs/" + dirLocation + "/day_" + dayPrefix + GetDay() + ".txt";
     }
 
-    public abstract void ParseInput();
-    public abstract int GetDay();
-    public abstract Object GetSolutionPart1();
-    public abstract Object GetSolutionPart2();
+    protected abstract void ParseInput();
+    protected abstract int GetDay();
+    protected abstract object GetSolutionPart1();
+    protected abstract object GetSolutionPart2();
 
     public static void PrintSolutions(Day day) {
         day.ParseInput();
-        Console.WriteLine("Day " + day.GetDay() + " solution to part 1: " + day.GetSolutionPart1().ToString());
-        Console.WriteLine("Day " + day.GetDay() + " solution to part 2: " + day.GetSolutionPart2().ToString());
+        Console.WriteLine("Day " + day.GetDay() + " solution to part 1: " + day.GetSolutionPart1());
+        Console.WriteLine("Day " + day.GetDay() + " solution to part 2: " + day.GetSolutionPart2());
     }
 }
