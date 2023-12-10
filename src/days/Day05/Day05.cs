@@ -1,21 +1,19 @@
-using System.Security.AccessControl;
-using aoc_2023;
+namespace aoc_2023.days.Day05;
 
-class Day05(Boolean actual) : Day(actual)
+internal class Day05(bool actual) : Day(actual)
 {
     protected override int GetDay() {
         return 5;
     }
-    List<int> calorieNumbers = new List<int>();
 
     protected override void ParseInput() {
     }
 
-    protected override String GetSolutionPart1() {
+    protected override string GetSolutionPart1() {
         return "tbd";
     }
 
-    protected override String GetSolutionPart2() {
+    protected override string GetSolutionPart2() {
         return "tbd";
     }
 }
