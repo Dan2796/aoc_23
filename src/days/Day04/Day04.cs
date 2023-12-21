@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
 namespace aoc_2023.days.Day04;
 
 internal class Day04(bool actual) : Day(actual)
@@ -37,15 +40,26 @@ internal class Day04(bool actual) : Day(actual)
 
     protected override string GetSolutionPart1()
     {
-        int totalPoints = 0;
-        foreach (ScratchCard card in _allScratchCards)
-        {
-            totalPoints += card.ScoreCard();
-        }
+        int totalPoints = _allScratchCards.Sum(card => card.ScoreCard());
         return totalPoints.ToString();
     }
 
-    protected override string GetSolutionPart2() {
-        return "tbd";
+    protected override string GetSolutionPart2()
+    {
+        int[] numberOfEachScratchCard = Enumerable.Repeat(1, _allScratchCards.Count).ToArray();  
+        foreach (ScratchCard card in _allScratchCards)
+        {
+            int numberOfThisCard = numberOfEachScratchCard[card.GetId() - 1];
+            // make sure not to try and update card numbers for cards that don't exist:
+            int howManyCardsToDuplicate = card.GetMatchNumber() + card.GetId() - 1 > _allScratchCards.Count
+                ? _allScratchCards.Count - card.GetId() - 1
+                : card.GetMatchNumber();
+            for (int i = card.GetId(); i < card.GetId() + howManyCardsToDuplicate; i++)
+            {
+                numberOfEachScratchCard[i] += numberOfThisCard;
+            }
+        }
+
+        return numberOfEachScratchCard.Sum().ToString();
     }
 }

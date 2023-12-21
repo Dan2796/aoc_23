@@ -2,28 +2,30 @@ namespace aoc_2023.days.Day04;
 
 public class ScratchCard(int id)
 {
-    readonly HashSet<int> _winners = [];
-    readonly List<int> _onCard = [];
+    private readonly HashSet<int> _winners = [];
+    private readonly List<int> _onCard = [];
 
+    public int GetId()
+    {
+        return id;
+    }
     public void AddWinner(int winner)
     {
         _winners.Add(winner);
     }
+
     public void AddOnCard(int numberOnCard)
     {
         _onCard.Add(numberOnCard);
     }
 
-    public int ScoreCard()
+    public int GetMatchNumber()
     {
-        int howManyMatched = 0;
-        foreach (int number in _onCard)
-        {
-            if (_winners.Contains(number))
-            {
-                howManyMatched++;
-            }
-        }
-        return (int)Math.Pow(2, howManyMatched - 1);
+        return _onCard.Count(number => _winners.Contains(number));
     }
+
+    public int ScoreCard()
+        {
+            return (int)Math.Pow(2, GetMatchNumber() - 1);
+        }
 }
