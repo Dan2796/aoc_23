@@ -3,9 +3,9 @@ using aoc_2023.days.Day04;
 
 namespace aoc_2023;
 
-internal abstract class DayProgram
+internal class Program
 {
-    private static void Main()
+    public static void Main()
     {
         Day.PrintSolutions(new Day04(true));
     }

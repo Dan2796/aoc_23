@@ -8,7 +8,7 @@ internal class Day02(bool actual) : Day(actual)
         return 2;
     }
 
-    private readonly List<DayGame> _allGames = [];
+    private readonly List<Game> _allGames = [];
 
     protected override void ParseInput() {
         using StreamReader reader = new(GetFileName());
@@ -16,11 +16,11 @@ internal class Day02(bool actual) : Day(actual)
         {
             string inputLine = reader.ReadLine()[5..];
             string[] inputLineSplit = inputLine.Split(':');
-            DayGame game = new(int.Parse(inputLineSplit[0]));
+            Game game = new(int.Parse(inputLineSplit[0]));
             string[] shows = inputLineSplit[1].Split(";");
             foreach (string show in shows) {
                 string[] ballsShown = show.Split(",");
-                DayShow myShow = new();
+                Show myShow = new();
                 foreach (string ball in ballsShown) {
                     // Index from second character to remove prepended space
                     string[] ballNumberAndColour = ball[1..].Split(" ");
@@ -35,7 +35,7 @@ internal class Day02(bool actual) : Day(actual)
 
     protected override String GetSolutionPart1() {
         int possibleIdsSum = 0;
-        foreach (DayGame game in _allGames) {
+        foreach (Game game in _allGames) {
             if (game.CheckPossible(14, 12, 13)) {
                 possibleIdsSum += game.GetId();
             }
@@ -45,7 +45,7 @@ internal class Day02(bool actual) : Day(actual)
 
     protected override String GetSolutionPart2() {
         int powerSum = 0;
-        foreach (DayGame game in _allGames) {
+        foreach (Game game in _allGames) {
             powerSum += game.PowerOfFewestPossibleCubes();
         }
         return powerSum.ToString();
