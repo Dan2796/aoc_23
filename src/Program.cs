@@ -1,10 +1,12 @@
-﻿namespace aoc_2023;
+﻿using aoc_2023.Days.Day01;
+
+namespace aoc_2023;
 
 internal class Program
 {
     public static void Main(string[] args)
     { 
-        Day day;
+        Day01 day;
         int dayRequested;
         try
         {
