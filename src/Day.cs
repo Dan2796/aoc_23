@@ -1,21 +1,20 @@
 namespace aoc_2023;
 
-public abstract class Day(bool actual)
+public abstract class Day
 {
-    protected string GetFileName() {
-        var dirLocation = actual ? "actual" : "example";
-        var dayPrefix = GetDay() < 10 ? "0" : "";
-        return "inputs/" + dirLocation + "/day_" + dayPrefix + GetDay() + ".txt";
+    protected string GetFileName()
+    {
+        var dayPrefix = Id < 10 ? "0" : "";
+        return "inputs/day_" + dayPrefix + Id + ".txt";
     }
 
-    protected abstract void ParseInput();
-    protected abstract int GetDay();
-    protected abstract object GetSolutionPart1();
-    protected abstract object GetSolutionPart2();
-
-    public static void PrintSolutions(Day day) {
-        day.ParseInput();
-        Console.WriteLine("Day " + day.GetDay() + " solution to part 1: " + day.GetSolutionPart1());
-        Console.WriteLine("Day " + day.GetDay() + " solution to part 2: " + day.GetSolutionPart2());
-    }
+    public abstract int Id { get; }
+    public object Part1Solution;
+    public object Part2Solution;
+    public abstract void ParseInputPart1();
+    public abstract void SolvePart1();
+    public abstract void ParseInputPart2();
+    public abstract void SolvePart2();
 }
+
+        

@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+/*using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace aoc_2023.days.Day04;
@@ -62,4 +62,4 @@ internal class Day04(bool actual) : Day(actual)
 
         return numberOfEachScratchCard.Sum().ToString();
     }
-}
+}*/

@@ -1,4 +1,4 @@
-using aoc_2023.src.days;
+/*using aoc_2023.src.days;
 
 namespace aoc_2023.days.Day02;
 
@@ -51,3 +51,4 @@ internal class Day02(bool actual) : Day(actual)
         return powerSum.ToString();
     }
 }
+*/
