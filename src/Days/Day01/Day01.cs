@@ -1,29 +1,18 @@
 namespace aoc_2023.Days.Day01;
 
-class Day01 : Day<int, int>
+class Day01 : Day<List<int[]>, int, List<int[]>, int>
 {
+  protected override int Id => 1;
 
-  public override int Id => 1;
-
-  private readonly List<int[]> _calibrationNumbersP1 = [];
-  private readonly List<int[]> _calibrationNumbersP2 = [];
-    
-  private readonly string[] _wordToNumbers = [
-    "zero"
-    ,"one"
-    ,"two"
-    ,"three"
-    ,"four"
-    ,"five"
-    ,"six"
-    ,"seven"
-    ,"eight"
-    ,"nine"
+  private readonly string[] _wordToNumbers =
+  [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
   ];
 
-  public override void ParseInputPart1()
+  protected override List<int[]> ParseInputPart1(string input)
   {
-    using StreamReader reader = new(GetFileName());
+    List<int[]> calibrationNumbersP1 = [];
+    using StreamReader reader = new(input);
     while (!reader.EndOfStream)
     {
       string? inputLine = reader.ReadLine();
@@ -31,34 +20,40 @@ class Day01 : Day<int, int>
       {
         continue;
       }
-      DigitsTrackerP1 tracker = new();
-      foreach (var t in inputLine)
-      {
-        // Update both parts if it is a single digit: 
-        if (char.IsDigit(t)) {
-          tracker.UpdateDigits(t - '0');
-        }
-      }
-      _calibrationNumbersP1.Add([tracker.FirstDigit,
-        tracker.SecondDigit]);
-    }
-  }
 
-  public override void SolvePart1()
+    DigitsTrackerP1 tracker = new();
+    foreach (var t in inputLine)
+    {
+      // Update both parts if it is a single digit: 
+      if (char.IsDigit(t))
+      {
+        tracker.UpdateDigits(t - '0');
+      }
+    }
+
+    calibrationNumbersP1.Add([
+      tracker.FirstDigit,
+      tracker.SecondDigit
+    ]);
+  }
+  return calibrationNumbersP1;
+}
+
+  protected override int SolvePart1(List<int[]> parsedInput)
   {
     var calibrationSum = 0;
-    foreach (var digits in _calibrationNumbersP1)
+    foreach (var digits in parsedInput)
     {
       calibrationSum += digits[0] * 10;
       calibrationSum += digits[1];
     }
-    Part1Solution = calibrationSum;
+    return calibrationSum;
   }
 
-  public override void ParseInputPart2()
+  protected override List<int[]> ParseInputPart2(string input)
   {
-   
-    using StreamReader reader = new(GetFileName());
+    List<int[]> calibrationNumbersP2 = [];
+    using StreamReader reader = new(input);
     while (!reader.EndOfStream)
     {
       var inputLine = reader.ReadLine();
@@ -84,19 +79,20 @@ class Day01 : Day<int, int>
           );
         }
       }
-      _calibrationNumbersP2.Add([digitsTrackerP2.FirstDigit,
+      calibrationNumbersP2.Add([digitsTrackerP2.FirstDigit,
         digitsTrackerP2.SecondDigit]);
     }
+    return calibrationNumbersP2;
   }
 
-  public override void SolvePart2()
+  protected override int SolvePart2(List<int[]> parsedInput)
   {
     var calibrationSum = 0;
-    foreach (var digits in _calibrationNumbersP2)
+    foreach (var digits in parsedInput)
     {
       calibrationSum += digits[0] * 10;
       calibrationSum += digits[1];
     }
-    Part2Solution = calibrationSum;
+    return calibrationSum;
   }
 }

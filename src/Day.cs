@@ -1,18 +1,25 @@
 namespace aoc_2023;
 
-public abstract class Day<T1, T2>
+public abstract class Day<TIn1, TOut1, TIn2, TOut2>
 {
-    protected string GetFileName()
-    {
-        var dayPrefix = Id < 10 ? "0" : "";
-        return "inputs/day_" + dayPrefix + Id + ".txt";
+    protected abstract int Id { get; }
+    protected abstract TIn1 ParseInputPart1(string input);
+    protected abstract TOut1 SolvePart1(TIn1 input);
+    protected abstract TIn2 ParseInputPart2(string input);
+    protected abstract TOut2 SolvePart2(TIn2 input);
+
+    private void PrintSolutionP1(TOut1 part1Solution)
+    { 
+        Console.WriteLine("Day " + Id + " solution to part 1: " + part1Solution);
     }
 
-    public abstract int Id { get; }
-    public T1 Part1Solution;
-    public T2 Part2Solution;
-    public abstract void ParseInputPart1();
-    public abstract void SolvePart1();
-    public abstract void ParseInputPart2();
-    public abstract void SolvePart2();
+    private void PrintSolutionP2(TOut2 part2Solution)
+    { 
+        Console.WriteLine("Day " + Id + " solution to part 2: " + part2Solution);
+    }
+
+    public void CompletePart1(string input) =>
+        PrintSolutionP1(SolvePart1(ParseInputPart1(input)));
+    public void CompletePart2(string input) =>
+        PrintSolutionP2(SolvePart2(ParseInputPart2(input)));
 }

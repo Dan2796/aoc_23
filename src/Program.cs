@@ -5,37 +5,32 @@ namespace aoc_2023;
 internal class Program
 {
     public static void Main(string[] args)
-    { 
-        Day01 day;
-        int dayRequested;
+    {
         try
         {
-            dayRequested = int.Parse(args[0]);
+            int dayRequested = int.Parse(args[0]);
+            RunDay(dayRequested);
         }
         catch (Exception)
         {
             Console.WriteLine("Please supply the number of the day you wish to access, between 1 and 25.");
-            return;
         }
-
+    }
+    private static void RunDay(int dayRequested)
+    {
         switch (dayRequested)
         {
             case < 1 or > 25:
                 Console.WriteLine("Please supply a valid AOC day, from between 1 and 25.");
                 return;
             case 1:
-                day = new Day01();
+                Day<List<int[]>, int, List<int[]>, int> day = new Day01();
+                day.CompletePart1("inputs/day_01.txt");
+                day.CompletePart2("inputs/day_01.txt");
                 break;
             default:
-                Console.WriteLine("Sorry, I haven't yet completed day " + args[0]);
+                Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);
                 return;
         }
-        
-        day.ParseInputPart1();
-        day.SolvePart1();
-        Console.WriteLine("Day " + day.Id + " solution to part 1: " + day.Part1Solution);
-        day.ParseInputPart2();
-        day.SolvePart2();
-        Console.WriteLine("Day " + day.Id + " solution to part 2: " + day.Part2Solution);
-        }
+    }
 }
