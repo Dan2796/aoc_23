@@ -1,4 +1,4 @@
-namespace aoc_2023;
+namespace AOC2023;
 
 public abstract class Day<TIn1, TOut1, TIn2, TOut2>
 {

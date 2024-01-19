@@ -1,6 +1,6 @@
-/*using aoc_2023.src.days;
+/*using AOC2023.src.days;
 
-namespace aoc_2023.days.Day02;
+namespace AOC2023.days.Day02;
 
 internal class Day02(bool actual) : Day(actual)
 {

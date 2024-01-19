@@ -1,6 +1,6 @@
-﻿using aoc_2023.Days.Day01;
+﻿using AOC2023.Days.Day01;
 
-namespace aoc_2023;
+namespace AOC2023;
 
 internal class Program
 {

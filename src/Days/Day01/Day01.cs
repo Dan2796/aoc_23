@@ -1,4 +1,4 @@
-namespace aoc_2023.Days.Day01;
+namespace AOC2023.Days.Day01;
 
 class Day01 : Day<List<int[]>, int, List<int[]>, int>
 {

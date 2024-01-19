@@ -1,4 +1,4 @@
-namespace aoc_2023.days.Day02;
+namespace AOC2023.days.Day02;
 
 public class Game(int id)
 {

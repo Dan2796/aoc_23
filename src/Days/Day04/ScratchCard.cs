@@ -1,4 +1,4 @@
-namespace aoc_2023.days.Day04;
+namespace AOC2023.days.Day04;
 
 public class ScratchCard(int id)
 {
