@@ -25,8 +25,8 @@ internal class Program
                 return;
             case 1:
                 Day<List<int[]>, int, List<int[]>, int> day = new Day01();
-                day.CompletePart1("inputs/day_01.txt");
-                day.CompletePart2("inputs/day_01.txt");
+                day.CompletePart1("Inputs/Day01.txt");
+                day.CompletePart2("Inputs/Day01.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);
