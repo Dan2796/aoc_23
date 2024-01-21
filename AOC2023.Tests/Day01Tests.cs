@@ -1,4 +1,3 @@
-using System.Text;
 using AOC2023.Days.Day01;
 using FluentAssertions;
 
@@ -11,16 +10,13 @@ public class Day01Tests
     {
         // Arrange
         Day01 day = new();
-        //string TestInput = "TestInputs/Day01.txt";
         string TestInput = "1abc2\n" +
                            "pqr3stu8vwx\n" +
                            "a1b2c3d4e5f\n" +
                            "treb7uchet";
-        byte[] byteArray = Encoding.UTF8.GetBytes(TestInput);
-        MemoryStream stream = new(byteArray);
-        StreamReader reader = new(stream);
+        StreamReader TestInputStream = TestMethods.StringToStreamReader(TestInput);
         // Act
-        int result = day.ParseAndSolveP1(reader);
+        int result = day.ParseAndSolveP1(TestInputStream);
         // Assert
         result.Should().Be(142);
     }
