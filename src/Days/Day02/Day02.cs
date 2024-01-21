@@ -1,54 +1,63 @@
-/*using AOC2023.src.days;
+namespace AOC2023.Days.Day02;
 
-namespace AOC2023.days.Day02;
-
-internal class Day02(bool actual) : Day(actual)
+public class Day02 : Day<List<Game>, int, List<Game>, int>
 {
-    protected override int GetDay() {
-        return 2;
-    }
+    protected override int Id => 2;
 
-    private readonly List<Game> _allGames = [];
-
-    protected override void ParseInput() {
-        using StreamReader reader = new(GetFileName());
-        while (!reader.EndOfStream)
+    private List<Game> ParseInput(StreamReader input)
+    {
+        List<Game> allGames = [];
+        while (!input.EndOfStream)
         {
-            string inputLine = reader.ReadLine()[5..];
+            string inputLine = input.ReadLine()[5..];
             string[] inputLineSplit = inputLine.Split(':');
             Game game = new(int.Parse(inputLineSplit[0]));
             string[] shows = inputLineSplit[1].Split(";");
-            foreach (string show in shows) {
+            foreach (string show in shows)
+            {
                 string[] ballsShown = show.Split(",");
                 Show myShow = new();
-                foreach (string ball in ballsShown) {
+                foreach (string ball in ballsShown)
+                {
                     // Index from second character to remove prepended space
                     string[] ballNumberAndColour = ball[1..].Split(" ");
                     myShow.AddColourInfo(int.Parse(ballNumberAndColour[0]),
                         ballNumberAndColour[1]);
                 }
+
                 game.AddShow(myShow);
             }
-            _allGames.Add(game);
+
+            allGames.Add(game);
         }
+
+        return allGames;
     }
 
-    protected override String GetSolutionPart1() {
+    protected override List<Game> ParseInputPart1(StreamReader input)
+    {
+        return ParseInput(input);
+    }
+    protected override List<Game> ParseInputPart2(StreamReader input)
+    {
+        return ParseInput(input);
+    }
+    protected override int SolvePart1(List<Game> allGames) {
         int possibleIdsSum = 0;
-        foreach (Game game in _allGames) {
+        foreach (Game game in allGames) {
             if (game.CheckPossible(14, 12, 13)) {
                 possibleIdsSum += game.GetId();
             }
         }
-        return possibleIdsSum.ToString();
+        return possibleIdsSum;
     }
 
-    protected override String GetSolutionPart2() {
+    protected override int SolvePart2(List<Game> allGames) {
         int powerSum = 0;
-        foreach (Game game in _allGames) {
+        foreach (Game game in allGames) {
             powerSum += game.PowerOfFewestPossibleCubes();
         }
-        return powerSum.ToString();
+        return powerSum;
     }
 }
-*/
+

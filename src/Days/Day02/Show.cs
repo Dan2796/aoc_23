@@ -1,3 +1,5 @@
+namespace AOC2023.Days.Day02;
+
 public class Show
 {
     // Starting assumption is there aren't any shown:
