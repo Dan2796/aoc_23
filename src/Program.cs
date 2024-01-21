@@ -1,5 +1,6 @@
 ﻿using AOC2023.Days.Day01;
 using AOC2023.Days.Day02;
+using AOC2023.Days.Day04;
 
 namespace AOC2023;
 
@@ -33,6 +34,11 @@ internal class Program
                 Day<List<Game>, int, List<Game>, int> day02 = new Day02();
                 day02.CompletePart1("Inputs/Day02.txt");
                 day02.CompletePart2("Inputs/Day02.txt");
+                break;
+            case 4:
+                Day<List<ScratchCard>, int, List<ScratchCard>, int> day04 = new Day04();
+                day04.CompletePart1("Inputs/Day04.txt");
+                day04.CompletePart2("Inputs/Day04.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);

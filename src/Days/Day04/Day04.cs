@@ -1,20 +1,14 @@
-/*using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+namespace AOC2023.Days.Day04;
 
-namespace AOC2023.days.Day04;
-
-internal class Day04(bool actual) : Day(actual)
+public class Day04 : Day<List<ScratchCard>, int, List<ScratchCard>, int>
 {
-    protected override int GetDay() {
-        return 4;
-    }
+    protected override int Id => 4;
 
-    private readonly List<ScratchCard> _allScratchCards = [];
-    protected override void ParseInput() { 
-        using StreamReader reader = new(GetFileName());
-        while (!reader.EndOfStream)
+    private List<ScratchCard> ParseInput(StreamReader input) { 
+        List<ScratchCard> allScratchCards = [];
+        while (!input.EndOfStream)
         {
-            string inputLine = reader.ReadLine();
+            string inputLine = input.ReadLine();
             string[] inputLineSplit = inputLine.Split(':');
             ScratchCard scratchCard = new(int.Parse(inputLineSplit[0][5..]));
             string[] inputLineWinnersAndOnCard = inputLineSplit[1].Split("|");
@@ -34,25 +28,29 @@ internal class Day04(bool actual) : Day(actual)
                     scratchCard.AddOnCard(int.Parse(onCard));
                 }
             }
-            _allScratchCards.Add(scratchCard);
+            allScratchCards.Add(scratchCard);
         }
+
+        return allScratchCards;
     }
 
-    protected override string GetSolutionPart1()
+    protected override List<ScratchCard> ParseInputPart1(StreamReader input) => ParseInput(input);
+    protected override List<ScratchCard> ParseInputPart2(StreamReader input) => ParseInput(input);
+    protected override int SolvePart1(List<ScratchCard> allScratchCards)
     {
-        int totalPoints = _allScratchCards.Sum(card => card.ScoreCard());
-        return totalPoints.ToString();
+        int totalPoints = allScratchCards.Sum(card => card.ScoreCard());
+        return totalPoints;
     }
 
-    protected override string GetSolutionPart2()
+    protected override int SolvePart2(List<ScratchCard> allScratchCards)
     {
-        int[] numberOfEachScratchCard = Enumerable.Repeat(1, _allScratchCards.Count).ToArray();  
-        foreach (ScratchCard card in _allScratchCards)
+        int[] numberOfEachScratchCard = Enumerable.Repeat(1, allScratchCards.Count).ToArray();  
+        foreach (ScratchCard card in allScratchCards)
         {
             int numberOfThisCard = numberOfEachScratchCard[card.GetId() - 1];
             // make sure not to try and update card numbers for cards that don't exist:
-            int howManyCardsToDuplicate = card.GetMatchNumber() + card.GetId() - 1 > _allScratchCards.Count
-                ? _allScratchCards.Count - card.GetId() - 1
+            int howManyCardsToDuplicate = card.GetMatchNumber() + card.GetId() - 1 > allScratchCards.Count
+                ? allScratchCards.Count - card.GetId() - 1
                 : card.GetMatchNumber();
             for (int i = card.GetId(); i < card.GetId() + howManyCardsToDuplicate; i++)
             {
@@ -60,6 +58,6 @@ internal class Day04(bool actual) : Day(actual)
             }
         }
 
-        return numberOfEachScratchCard.Sum().ToString();
+        return numberOfEachScratchCard.Sum();
     }
-}*/
+}
