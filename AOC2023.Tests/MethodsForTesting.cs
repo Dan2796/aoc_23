@@ -2,7 +2,7 @@ using System.Text;
 
 namespace AOC2023.Tests;
 
-public class TestMethods
+public static class MethodsForTesting
 {
     public static StreamReader StringToStreamReader(string input)
     { 
