@@ -26,7 +26,7 @@ internal class Program
                 Console.WriteLine("Please supply a valid AOC day, from between 1 and 25.");
                 return;
             case 1:
-                Day<List<int[]>, int, List<int[]>, int> day01 = new Day01();
+                Day<List<(int, int)>, int, List<(int, int)>, int> day01 = new Day01();
                 day01.CompletePart1("Inputs/Day01.txt");
                 day01.CompletePart2("Inputs/Day01.txt");
                 break;

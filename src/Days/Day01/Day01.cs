@@ -1,6 +1,6 @@
 namespace AOC2023.Days.Day01;
 
-public class Day01 : Day<List<int[]>, int, List<int[]>, int>
+public class Day01 : Day<List<(int, int)>, int, List<(int, int)>, int>
 {
   protected override int Id => 1;
 
@@ -8,54 +8,46 @@ public class Day01 : Day<List<int[]>, int, List<int[]>, int>
   [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
   ];
-
-  protected override List<int[]> ParseInputPart1(StreamReader input)
+  
+  private static int CalculateCalibrationSum(List<(int, int)> parsedInput)
   {
-    List<int[]> calibrationNumbersP1 = [];
+    int calibrationSum = 0;
+    foreach ((int, int) digits in parsedInput)
+    {
+      calibrationSum += digits.Item1 * 10;
+      calibrationSum += digits.Item2;
+    }
+    return calibrationSum;
+    
+  }
+
+  protected override List<(int, int)> ParseInputPart1(StreamReader input)
+  {
+    List<(int, int)> calibrationNumbersP1 = [];
     while (!input.EndOfStream)
     {
-      string? inputLine = input.ReadLine();
-      if (inputLine == null)
-      {
-        continue;
-      }
-
       DigitsTrackerP1 tracker = new();
-      foreach (char t in inputLine)
+      string? inputLine = input.ReadLine();
+      if (inputLine is null) { continue; }
+      foreach (char t in inputLine.Where(char.IsDigit))
       {
-        // Update both parts if it is a single digit: 
-        if (char.IsDigit(t))
-        {
-          tracker.UpdateDigits(t - '0');
-        }
+        tracker.UpdateDigits(t - '0');
       }
-
-      calibrationNumbersP1.Add([
-        tracker.FirstDigit,
-        tracker.SecondDigit
-      ]);
+      calibrationNumbersP1.Add((tracker.FirstDigit, tracker.SecondDigit));
     }
     return calibrationNumbersP1;
 }
 
-  protected override int SolvePart1(List<int[]> parsedInput)
-  {
-    int calibrationSum = 0;
-    foreach (int[] digits in parsedInput)
-    {
-      calibrationSum += digits[0] * 10;
-      calibrationSum += digits[1];
-    }
-    return calibrationSum;
-  }
+  protected override int SolvePart1(List<(int, int)> parsedInput) =>
+    CalculateCalibrationSum(parsedInput);
 
-  protected override List<int[]> ParseInputPart2(StreamReader input)
+  protected override List<(int, int)> ParseInputPart2(StreamReader input)
   {
-    List<int[]> calibrationNumbersP2 = [];
+    List<(int, int)> calibrationNumbersP2 = [];
     while (!input.EndOfStream)
     {
       string? inputLine = input.ReadLine();
-      if (inputLine == null)
+      if (inputLine is null)
       {
         continue;
       }
@@ -77,20 +69,11 @@ public class Day01 : Day<List<int[]>, int, List<int[]>, int>
           );
         }
       }
-      calibrationNumbersP2.Add([digitsTrackerP2.FirstDigit,
-        digitsTrackerP2.SecondDigit]);
+      calibrationNumbersP2.Add((digitsTrackerP2.FirstDigit, digitsTrackerP2.SecondDigit));
     }
     return calibrationNumbersP2;
   }
-
-  protected override int SolvePart2(List<int[]> parsedInput)
-  {
-    int calibrationSum = 0;
-    foreach (int[] digits in parsedInput)
-    {
-      calibrationSum += digits[0] * 10;
-      calibrationSum += digits[1];
-    }
-    return calibrationSum;
-  }
+  
+  protected override int SolvePart2(List<(int, int)> parsedInput) =>
+    CalculateCalibrationSum(parsedInput);
 }
