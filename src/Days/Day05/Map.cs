@@ -6,12 +6,14 @@ public class Map(string sourceName, string destinationName, List<MapRule> mapRul
     public string destinationName = destinationName;
     public long MapInput(long input)
     {
-        long output = input;
         foreach (MapRule mapRule in mapRules)
         {
-            output = mapRule.ApplyRule(output);
+            long output = mapRule.ApplyRule(input);
+            if (output != input)
+            {
+                return output;
+            }
         }
-
-        return output;
+        return input;
     }
 }
