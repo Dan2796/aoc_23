@@ -14,4 +14,3 @@ public class MapRule(IReadOnlyList<string> rangeDetails)
         return output;
     }
 }
-    

@@ -17,17 +17,19 @@ public class Day05 : Day<Almanac, long, Almanac, int>
         input.ReadLine();
         List<Map> listOfMaps = [];
         List<MapRule> mapRules = [];
+        string source = null;
+        string destination = null;
         while (!input.EndOfStream)
         {
             string nextLine = input.ReadLine();
-            string source = null;
-            string destination = null;
             if (nextLine == "")
             {
                  // adds the map to the current list of maps (which is added to the Almanac at construction)
                  listOfMaps.Add(new Map(source, destination, mapRules));
-                 // reset mapRules
+                 // reset mapRules, source and destination
                  mapRules = [];
+                 source = null;
+                 destination = null;
             }
             else if (nextLine.Contains("map"))
             {
@@ -40,6 +42,8 @@ public class Day05 : Day<Almanac, long, Almanac, int>
                 mapRules.Add(new MapRule(nextLine.Split(" ")));
             }
         }
+        // add last one once finished reading file:
+        listOfMaps.Add(new Map(source, destination, mapRules));
 
         Almanac almanac = new(seeds.Select(long.Parse).ToArray(), listOfMaps);
         return almanac;

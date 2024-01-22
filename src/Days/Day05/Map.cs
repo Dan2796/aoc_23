@@ -15,4 +15,3 @@ public class Map(string sourceName, string destinationName, List<MapRule> mapRul
         return output;
     }
 }
-    
