@@ -8,7 +8,7 @@ public class MapRule(IReadOnlyList<string> rangeDetails)
 
     public long ApplyRule(long input)
     {
-        long output = input > _rangeStart && input < _rangeStart + _rangeLength
+        long output = input >= _rangeStart && input < _rangeStart + _rangeLength
             ? input + _destinationStart - _rangeStart
             : input;
         return output;

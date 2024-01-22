@@ -5,16 +5,12 @@ in which a source category becomes a destination category. Each map rule specifi
 to input that is required for seed sin that range.
  */
 
-public class Day05 : Day<Almanac, long, Almanac, int>
+public class Day05 : Day<Almanac, long, Almanac, long>
 {
     protected override int Id => 5;
 
-    private Almanac ParseInput(StreamReader input)
+    private Almanac ParseInputAfterSeeds(long[] seedsArray, StreamReader input)
     {
-        // Store seeds as first line
-        string[] seeds = input.ReadLine().Replace("seeds: ", "").Split(" ");
-        // skip empty line after seeds are listed
-        input.ReadLine();
         List<Map> listOfMaps = [];
         List<MapRule> mapRules = [];
         string source = null;
@@ -45,14 +41,38 @@ public class Day05 : Day<Almanac, long, Almanac, int>
         // add last one once finished reading file:
         listOfMaps.Add(new Map(source, destination, mapRules));
 
-        Almanac almanac = new(seeds.Select(long.Parse).ToArray(), listOfMaps);
+        Almanac almanac = new(seedsArray, listOfMaps);
         return almanac;
     }
 
-    protected override Almanac ParseInputPart1(StreamReader input) => ParseInput(input);
-    protected override Almanac ParseInputPart2(StreamReader input) => ParseInput(input);
+    protected override Almanac ParseInputPart1(StreamReader input)
+    { 
+        string[] seeds = input.ReadLine().Replace("seeds: ", "").Split(" "); 
+        long[] seedsArray = seeds.Select(long.Parse).ToArray(); 
+        // skip empty line after seeds are listed
+        input.ReadLine();
+        return ParseInputAfterSeeds(seedsArray, input);
+    } 
+    
+    
+    protected override Almanac ParseInputPart2(StreamReader input)
+    { 
+        string[] seeds = input.ReadLine().Replace("seeds: ", "").Split(" ");
+        long[] seedsAsLongs = seeds.Select(long.Parse).ToArray();
+        List<long> seedsAsList = [];
+        for (int i = 0; i < seedsAsLongs.Length; i+=2)
+        {
+            for (long j = seedsAsLongs[i]; j < seedsAsLongs[i] + seedsAsLongs[i + 1]; j++)
+            {
+                seedsAsList.Add(j);
+            }
+        }
+        // skip empty line after seeds are listed
+        input.ReadLine();
+        return ParseInputAfterSeeds(seedsAsList.ToArray(), input);
+    }
 
-    protected override long SolvePart1(Almanac almanac)
+    private long GetMinLocation(Almanac almanac)
     {
         long[] locations = almanac.ConvertAllSeeds();
         long minLocation = locations[0];
@@ -64,12 +84,10 @@ public class Day05 : Day<Almanac, long, Almanac, int>
             }
             
         }
-
         return minLocation;
     }
-
-    protected override int SolvePart2(Almanac almanac)
-    {
-        return 1;
-    }
+    protected override long SolvePart1(Almanac almanac) =>
+        GetMinLocation(almanac);
+    protected override long SolvePart2(Almanac almanac) =>
+        GetMinLocation(almanac);
 }

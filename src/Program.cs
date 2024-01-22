@@ -43,7 +43,7 @@ internal class Program
                 day04.CompletePart2("Inputs/Day04.txt");
                 break;
             case 5:
-                Day<Almanac, long, Almanac, int> day05 = new Day05();
+                Day<Almanac, long, Almanac, long> day05 = new Day05();
                 day05.CompletePart1("Inputs/Day05.txt");
                 day05.CompletePart2("Inputs/Day05.txt");
                 break;
