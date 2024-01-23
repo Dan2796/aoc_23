@@ -213,3 +213,5 @@ project.lock.json
 
 # UWP Projects
 AppPackages/
+
+Inputs
