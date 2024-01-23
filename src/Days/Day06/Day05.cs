@@ -6,7 +6,15 @@ public class Day06 : Day<List<Race>, int, List<Race>, int>
 
     private List<Race> ParseInput(StreamReader input)
     {
+        string raceTimesString = input.ReadLine().Replace("  ", "").Replace("Time:", "");
+        int[] raceTimes = raceTimesString.Split(" ").Select(int.Parse).ToArray();
+        string raceDistancesString = input.ReadLine().Replace("  ", "").Replace("Distance: ", "");
+        int[] raceDistances = raceDistancesString.Split(" ").Select(int.Parse).ToArray();
         List<Race> races = [];
+        for (int i = 0; i < raceTimes.Length; i++)
+        {
+            races.Add(new Race(raceTimes[i], raceDistances[i]));
+        }
         return races;
     }
 
