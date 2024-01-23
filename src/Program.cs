@@ -2,6 +2,7 @@
 using AOC2023.Days.Day02;
 using AOC2023.Days.Day04;
 using AOC2023.Days.Day05;
+using AOC2023.Days.Day06;
 
 namespace AOC2023;
 
@@ -46,6 +47,11 @@ internal class Program
                 Day<Almanac, long, Almanac, long> day05 = new Day05();
                 day05.CompletePart1("Inputs/Day05.txt");
                 day05.CompletePart2("Inputs/Day05.txt");
+                break;
+            case 6:
+                Day<List<Race>, int, List<Race>, int> day06 = new Day06();
+                day06.CompletePart1("Inputs/Day06.txt");
+                day06.CompletePart2("Inputs/Day06.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);
