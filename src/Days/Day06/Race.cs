@@ -1,35 +1,8 @@
+namespace AOC2023.Days.Day06;
+
 public class Race(long raceTime, long raceDistance)
 {
-    public int HowManyWins()
-    {
-        int wins = 0;
-        foreach(int distance in GetDistanceOptions())
-        {
-            if (distance > raceDistance)
-            {
-                wins++;
-            }
-        }
-        return wins;
-    }
-    public long[] GetDistanceOptions()
-    {
-        long[] options = new long[raceTime];
-        for(int i = 0; i < raceTime; i++)
-        {
-            options[i] = GetRaceDistance(i, raceTime);
-        }
-        return options;
-    }
-
-    public static long GetRaceDistance(int buttonHoldTime, long raceTime)
-    {
-        int speed = buttonHoldTime;
-        long remainingTime = raceTime - buttonHoldTime;
-        return remainingTime * speed;
-    }
-
-    public long HowManyWinsAlternate()
+    public long HowManyWins()
     {
         (float, float) boundaries = QuadraticEquation(raceTime, raceDistance);
         // Add 1 and round down for cases where there is a button press that would end in a draw (i.e. where

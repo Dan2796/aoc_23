@@ -21,7 +21,7 @@ public class Day06Tests
     public void Race_QuadraticEquation_SolvesCorrectly()
     {
         (float, float) result = Race.QuadraticEquation(7, 9);
-        (int, int) roundedResult = ((int)Math.Ceiling(result.Item1), (int)Math.Floor(result.Item2));
+        (int, int) roundedResult = ((int)Math.Floor(result.Item1 + 1), (int)Math.Ceiling(result.Item2 - 1));
         roundedResult.Should().Be((2, 5));
     }
     [Fact]
