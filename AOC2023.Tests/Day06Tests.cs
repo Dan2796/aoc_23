@@ -16,12 +16,18 @@ public class Day06Tests
         long result = _day.ParseAndSolveP1(_testInputStream);
         result.Should().Be(288);
     }
-    /*
+
+    [Fact]
+    public void Race_QuadraticEquation_SolvesCorrectly()
+    {
+        (float, float) result = Race.QuadraticEquation(7, 9);
+        (int, int) roundedResult = ((int)Math.Ceiling(result.Item1), (int)Math.Floor(result.Item2));
+        roundedResult.Should().Be((2, 5));
+    }
     [Fact]
     public void Day06_ParseAndSolveP2_ReturnCorrectAnswer() 
     { 
         long result = _day.ParseAndSolveP2(_testInputStream);
-        result.Should().Be(288);
+        result.Should().Be(71503);
     }
-    */
 }

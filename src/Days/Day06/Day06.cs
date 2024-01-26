@@ -1,10 +1,10 @@
 namespace AOC2023.Days.Day06;
 using System.Text.RegularExpressions;
-public class Day06 : Day<List<Race>, int, List<Race>, int>
+public class Day06 : Day<List<Race>, int, Race, long>
 {
     protected override int Id => 6;
 
-    private List<Race> ParseInput(StreamReader input)
+    protected override List<Race> ParseInputPart1(StreamReader input)
     {
         string raceTimesString = Regex.Replace(input.ReadLine(), "  +", " ");
         string raceDistancesString = Regex.Replace(input.ReadLine(), "  +", " ");
@@ -19,11 +19,14 @@ public class Day06 : Day<List<Race>, int, List<Race>, int>
         return races;
     }
 
-    protected override List<Race> ParseInputPart1(StreamReader input) =>
-        ParseInput(input);
-
-    protected override List<Race> ParseInputPart2(StreamReader input) =>
-        ParseInput(input);
+    protected override Race ParseInputPart2(StreamReader input)
+    {
+        string raceTimeString = Regex.Replace(input.ReadLine(), " +", "");
+        string raceDistanceString = Regex.Replace(input.ReadLine(), " +", "");
+        long raceTime = long.Parse(raceTimeString.Replace("Time:", ""));
+        long raceDistance= long.Parse(raceDistanceString.Replace("Distance:", ""));
+        return new Race(raceTime, raceDistance);
+    }
 
     protected override int SolvePart1(List<Race> races)
     {
@@ -35,6 +38,9 @@ public class Day06 : Day<List<Race>, int, List<Race>, int>
 
         return answerPart1;
     }
-    protected override int SolvePart2(List<Race> race) =>
-        1;
+
+    protected override long SolvePart2(Race race)
+    {
+        return race.HowManyWinsAlternate();
+    }
 }

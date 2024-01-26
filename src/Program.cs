@@ -49,7 +49,7 @@ internal class Program
                 day05.CompletePart2("Inputs/Day05.txt");
                 break;
             case 6:
-                Day<List<Race>, int, List<Race>, int> day06 = new Day06();
+                Day<List<Race>, int, Race, long> day06 = new Day06();
                 day06.CompletePart1("Inputs/Day06.txt");
                 day06.CompletePart2("Inputs/Day06.txt");
                 break;
