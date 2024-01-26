@@ -1,15 +1,16 @@
 namespace AOC2023.Days.Day06;
-
+using System.Text.RegularExpressions;
 public class Day06 : Day<List<Race>, int, List<Race>, int>
 {
     protected override int Id => 6;
 
     private List<Race> ParseInput(StreamReader input)
     {
-        string raceTimesString = input.ReadLine().Replace("  ", "").Replace("Time:", "");
-        int[] raceTimes = raceTimesString.Split(" ").Select(int.Parse).ToArray();
-        string raceDistancesString = input.ReadLine().Replace("  ", "").Replace("Distance: ", "");
-        int[] raceDistances = raceDistancesString.Split(" ").Select(int.Parse).ToArray();
+        string raceTimesString = Regex.Replace(input.ReadLine(), "  +", " ");
+        string raceDistancesString = Regex.Replace(input.ReadLine(), "  +", " ");
+        int[] raceTimes = raceTimesString.Split(" ")[1..].Select(int.Parse).ToArray();
+        int[] raceDistances = raceDistancesString.Split(" ")[1..].Select(int.Parse).ToArray();
+
         List<Race> races = [];
         for (int i = 0; i < raceTimes.Length; i++)
         {
