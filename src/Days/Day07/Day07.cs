@@ -7,6 +7,11 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     private static List<Hand> ParseInput(StreamReader input)
     {
         List<Hand> hands = [];
+        while (!input.EndOfStream)
+        {
+            string[] handAndBid = input.ReadLine().Split(" ");
+            hands.Add(new Hand(handAndBid[0], int.Parse(handAndBid[1])));
+        }
         return hands;
     }
 

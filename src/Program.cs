@@ -56,8 +56,8 @@ internal class Program
                 break;
             case 7:
                 Day<List<Hand>, int, List<Hand>, int> day07 = new Day07();
-                day07.CompletePart1("Inputs/Day06.txt");
-                day07.CompletePart2("Inputs/Day06.txt");
+                day07.CompletePart1("Inputs/Day07.txt");
+                day07.CompletePart2("Inputs/Day07.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);
