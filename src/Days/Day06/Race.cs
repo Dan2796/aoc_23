@@ -1,16 +1,28 @@
-public class Race(int _raceTime, int _raceDistance)
+public class Race(int raceTime, int raceDistance)
 {
-    public int[] getDistanceOptions()
+    public int HowManyWins()
     {
-        int[] options = new int[_raceTime];
-        for(int i = 0; i < _raceTime; i++)
+        int wins = 0;
+        foreach(int distance in GetDistanceOptions())
         {
-            options[i] = getRaceDistance(i, _raceTime);
+            if (distance > raceDistance)
+            {
+                wins++;
+            }
+        }
+        return wins;
+    }
+    public int[] GetDistanceOptions()
+    {
+        int[] options = new int[raceTime];
+        for(int i = 0; i < raceTime; i++)
+        {
+            options[i] = GetRaceDistance(i, raceTime);
         }
         return options;
     }
 
-    public static int getRaceDistance(int buttonHoldTime, int raceTime)
+    public static int GetRaceDistance(int buttonHoldTime, int raceTime)
     {
         int speed = buttonHoldTime;
         int remainingTime = raceTime - buttonHoldTime;

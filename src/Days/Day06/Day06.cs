@@ -23,9 +23,17 @@ public class Day06 : Day<List<Race>, int, List<Race>, int>
 
     protected override List<Race> ParseInputPart2(StreamReader input) =>
         ParseInput(input);
-    
-    protected override int SolvePart1(List<Race> race) =>
-        1;
+
+    protected override int SolvePart1(List<Race> races)
+    {
+        int answerPart1 = 1;
+        foreach (Race race in races)
+        {
+            answerPart1 *= race.HowManyWins();
+        }
+
+        return answerPart1;
+    }
     protected override int SolvePart2(List<Race> race) =>
         1;
 }
