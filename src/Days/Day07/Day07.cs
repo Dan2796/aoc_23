@@ -10,6 +10,7 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
         while (!input.EndOfStream)
         {
             string[] handAndBid = input.ReadLine().Split(" ");
+            // Store as base 15 so that comparisons later are easier
             hands.Add(new Hand(handAndBid[0], int.Parse(handAndBid[1])));
         }
         return hands;
@@ -21,8 +22,15 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     protected override List<Hand> ParseInputPart2(StreamReader input) =>
         ParseInput(input);
 
-    protected override int SolvePart1(List<Hand> hands) =>
-        1;
+    protected override int SolvePart1(List<Hand> hands)
+    {
+        foreach (Hand hand in hands)
+        {
+            Console.WriteLine(hand.Cards);
+            Console.WriteLine(hand.GetHandType());
+        }
+        return 1;
+    }
 
     protected override int SolvePart2(List<Hand> hands) =>
         1;
