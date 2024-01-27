@@ -4,58 +4,32 @@ namespace AOC2023.Days.Day07;
 
 public class Hand(string cards, int bid) : IComparable<Hand>
 {
-    public string Cards => cards;
+    private string Cards => cards;
     public int Bid => bid;
     
-    public int CompareTo(Hand otherHand)
+    public int CompareTo(Hand otherHand) =>
+        CalculateHandValue().CompareTo(otherHand.CalculateHandValue());
+    
+    private int CalculateHandValue()
     {
-        return CalculateHandValue().CompareTo(otherHand.CalculateHandValue());
-    }
-    public int CalculateHandValue()
-    {
-        // just use base 16 since there's a bulit in method
-        string cardsBase15 = cards
+        string cardsBase14 = cards
             .Replace("A", "E")
             .Replace("K", "D")
             .Replace("Q", "C")
             .Replace("J", "B")
             .Replace("T", "A");
         // Prepend hand type as a letter so get a single integer representing hand value.
-        char prefixCharacter = '0';
-        HandType handType = GetHandType();
-        if (handType == HandType.Pair)
-        {
-            prefixCharacter = '1';
-        }
-        if (handType == HandType.TwoPair)
-        {
-            prefixCharacter = '2';
-        }
-        if (handType == HandType.ThreeOfAKind)
-        {
-            prefixCharacter = '3';
-        }
-        if (handType == HandType.FullHouse)
-        {
-            prefixCharacter = '4';
-        }
-        if (handType == HandType.FourOfAKind)
-        {
-            prefixCharacter = '5';
-        }
-        if (handType == HandType.FiveOfAKind)
-        {
-            prefixCharacter = '6';
-        }
-        cardsBase15 = prefixCharacter + cardsBase15;
-        int handValue = Convert.ToInt32(cardsBase15, 16);
+        char handType = GetHandType();
+        cardsBase14 = handType + cardsBase14;
+        // just convert to base 16 since there's a built-in method
+        int handValue = Convert.ToInt32(cardsBase14, 16);
         return handValue;
     }
 
-    public HandType GetHandType()
+    private char GetHandType()
     {
         int[] duplicatesList = GetArrayDuplicates(this);
-        HandType handType = HandType.HighCard;
+        char handType = (char) HandType.HighCard;
         bool containsThreeOfAKind = false;
         bool containsPair1 = false;
         bool containsPair2 = false;
@@ -63,12 +37,12 @@ public class Hand(string cards, int bid) : IComparable<Hand>
         {
             if (count == 5)
             {
-                return HandType.FiveOfAKind;
+                return (char) HandType.FiveOfAKind;
             }
 
             if (count == 4)
             {
-                return HandType.FourOfAKind;
+                return (char) HandType.FourOfAKind;
             }
 
             if (count == 3)
@@ -88,33 +62,33 @@ public class Hand(string cards, int bid) : IComparable<Hand>
 
         if (containsThreeOfAKind && containsPair1)
         {
-            return HandType.FullHouse;
+            return (char) HandType.FullHouse;
         }
         if (containsThreeOfAKind)
         {
-            return HandType.ThreeOfAKind;
+            return (char) HandType.ThreeOfAKind;
         }
         if (containsPair1 && containsPair2)
         {
-            return HandType.TwoPair;
+            return (char) HandType.TwoPair;
         }
 
         if (containsPair1)
         {
-            return HandType.Pair;
+            return (char) HandType.Pair;
         }
         return handType;
     }
 
-    public enum HandType
+    private enum HandType
     {
-        FiveOfAKind,
-        FourOfAKind,
-        FullHouse,
-        ThreeOfAKind,
-        TwoPair,
-        Pair,
-        HighCard
+        FiveOfAKind = '7',
+        FourOfAKind = '6',
+        FullHouse = '5',
+        ThreeOfAKind = '4',
+        TwoPair = '3',
+        Pair = '2',
+        HighCard = '1'
     }
         
     private static int[] GetArrayDuplicates(Hand hand)

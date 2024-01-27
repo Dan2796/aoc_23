@@ -26,9 +26,11 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     {
         hands.Sort();
         int answerPart1 = 0;
-        for(int i = 1; i <= hands.Count; i++)
+        int handRank = 1;
+        foreach (Hand hand in hands)
         {
-            answerPart1 += hands[i - 1].Bid * i;
+            answerPart1 += hand.Bid * handRank;
+            handRank++;
         }
         return answerPart1;
     }
