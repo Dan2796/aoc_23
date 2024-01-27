@@ -2,20 +2,53 @@ using System.Text.RegularExpressions;
 
 namespace AOC2023.Days.Day07;
 
-public class Hand(string cards, int bid)
+public class Hand(string cards, int bid) : IComparable<Hand>
 {
     public string Cards => cards;
+    public int Bid => bid;
+    
+    public int CompareTo(Hand otherHand)
+    {
+        return CalculateHandValue().CompareTo(otherHand.CalculateHandValue());
+    }
     public int CalculateHandValue()
     {
-        // convert to base 15 so that equivalent hands can be easily compared by their first letter.
-        // Could do in base 14 but would require subtracting one from each number and not much point.
-        string cardsBase14 = cards
+        // just use base 16 since there's a bulit in method
+        string cardsBase15 = cards
             .Replace("A", "E")
             .Replace("K", "D")
             .Replace("Q", "C")
             .Replace("J", "B")
             .Replace("T", "A");
-        int handValue = Convert.ToInt32(cardsBase14, 15);
+        // Prepend hand type as a letter so get a single integer representing hand value.
+        char prefixCharacter = '0';
+        HandType handType = GetHandType();
+        if (handType == HandType.Pair)
+        {
+            prefixCharacter = '1';
+        }
+        if (handType == HandType.TwoPair)
+        {
+            prefixCharacter = '2';
+        }
+        if (handType == HandType.ThreeOfAKind)
+        {
+            prefixCharacter = '3';
+        }
+        if (handType == HandType.FourOfAKind)
+        {
+            prefixCharacter = '4';
+        }
+        if (handType == HandType.FullHouse)
+        {
+            prefixCharacter = '5';
+        }
+        if (handType == HandType.FiveOfAKind)
+        {
+            prefixCharacter = '6';
+        }
+        cardsBase15 = prefixCharacter + cardsBase15;
+        int handValue = Convert.ToInt32(cardsBase15, 16);
         return handValue;
     }
 
@@ -100,4 +133,5 @@ public class Hand(string cards, int bid)
         string regexPattern = "[^" + card + "]*";
         return Regex.Replace(hand.Cards, regexPattern, "").Length;
     }
+
 }

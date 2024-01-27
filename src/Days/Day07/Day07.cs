@@ -24,12 +24,13 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
 
     protected override int SolvePart1(List<Hand> hands)
     {
-        foreach (Hand hand in hands)
+        hands.Sort();
+        int answerPart1 = 0;
+        for(int i = 1; i <= hands.Count; i++)
         {
-            Console.WriteLine(hand.Cards);
-            Console.WriteLine(hand.GetHandType());
+            answerPart1 += hands[i - 1].Bid * i;
         }
-        return 1;
+        return answerPart1;
     }
 
     protected override int SolvePart2(List<Hand> hands) =>
