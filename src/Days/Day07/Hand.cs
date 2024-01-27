@@ -29,55 +29,50 @@ public class Hand(string cards, int bid) : IComparable<Hand>
     private char GetHandType()
     {
         int[] duplicatesList = GetArrayDuplicates(this);
-        char handType = (char) HandType.HighCard;
+        // Need to track pairs and three of a kind until all the way through the duplicates list to make
+        // sure there aren't any full houses.
+        bool containsPair = false;
+        bool containsTwoPair = false;
         bool containsThreeOfAKind = false;
-        bool containsPair1 = false;
-        bool containsPair2 = false;
-        foreach(int count in duplicatesList)
+        foreach (int count in duplicatesList)
         {
-            if (count == 5)
+            switch (count)
             {
-                return (char) HandType.FiveOfAKind;
-            }
-
-            if (count == 4)
-            {
-                return (char) HandType.FourOfAKind;
-            }
-
-            if (count == 3)
-            {
-                containsThreeOfAKind = true;
-            }
-
-            if (count == 2)
-            {
-                if (containsPair1)
-                {
-                    containsPair2 = true;
-                }
-                containsPair1 = true;
+                case 5:
+                    return (char)HandType.FiveOfAKind;
+                case 4:
+                    return (char)HandType.FourOfAKind;
+                case 3:
+                    containsThreeOfAKind = true;
+                    break;
+                case 2:
+                    if (containsPair)
+                    {
+                        containsTwoPair = true;
+                    }
+                    containsPair = true;
+                    break;
             }
         }
-
-        if (containsThreeOfAKind && containsPair1)
+        if (containsPair && containsThreeOfAKind)
         {
-            return (char) HandType.FullHouse;
+            return (char)HandType.FullHouse;
         }
         if (containsThreeOfAKind)
         {
-            return (char) HandType.ThreeOfAKind;
+            return (char)HandType.ThreeOfAKind;
         }
-        if (containsPair1 && containsPair2)
+        if (containsTwoPair)
         {
-            return (char) HandType.TwoPair;
+            return (char)HandType.TwoPair;
         }
 
-        if (containsPair1)
+        if (containsPair)
         {
-            return (char) HandType.Pair;
+            return (char)HandType.Pair;
         }
-        return handType;
+
+        return (char)HandType.HighCard;
     }
 
     private enum HandType
