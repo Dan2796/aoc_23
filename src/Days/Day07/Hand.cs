@@ -35,11 +35,11 @@ public class Hand(string cards, int bid) : IComparable<Hand>
         {
             prefixCharacter = '3';
         }
-        if (handType == HandType.FourOfAKind)
+        if (handType == HandType.FullHouse)
         {
             prefixCharacter = '4';
         }
-        if (handType == HandType.FullHouse)
+        if (handType == HandType.FourOfAKind)
         {
             prefixCharacter = '5';
         }
