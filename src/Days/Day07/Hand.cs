@@ -1,18 +1,23 @@
-using System.Text.RegularExpressions;
-
 namespace AOC2023.Days.Day07;
 
-public class Hand(string cards, int bid) : IComparable<Hand>
+public class Hand: IComparable<Hand>
 {
-    private string Cards => cards;
-    public int Bid => bid;
+    private readonly string _cards;
+    public int Bid { get; }
+    private readonly int _handValue;
+    public Hand(string cards, int bid)
+    {
+        _cards = cards;
+        Bid = bid; 
+        _handValue = CalculateHandValue();
+}
     
     public int CompareTo(Hand otherHand) =>
-        CalculateHandValue().CompareTo(otherHand.CalculateHandValue());
+        _handValue.CompareTo(otherHand._handValue);
     
     private int CalculateHandValue()
     {
-        string cardsBase14 = cards
+        string cardsBase14 = _cards
             .Replace("A", "E")
             .Replace("K", "D")
             .Replace("Q", "C")
@@ -28,13 +33,13 @@ public class Hand(string cards, int bid) : IComparable<Hand>
 
     private char GetHandType()
     {
-        int[] duplicatesList = GetArrayDuplicates(this);
+        Dictionary<char, int> duplicatesList = CountCardGroups();
         // Need to track pairs and three of a kind until all the way through the duplicates list to make
         // sure there aren't any full houses.
         bool containsPair = false;
         bool containsTwoPair = false;
         bool containsThreeOfAKind = false;
-        foreach (int count in duplicatesList)
+        foreach(int count in duplicatesList.Values)
         {
             switch (count)
             {
@@ -86,21 +91,28 @@ public class Hand(string cards, int bid) : IComparable<Hand>
         HighCard = '1'
     }
         
-    private static int[] GetArrayDuplicates(Hand hand)
+    private Dictionary<char, int> CountCardGroups()
     {
-        char[] cardTypes = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-        int[] count = new int[13];
-        for (int i = 0; i < count.Length; i++)
+        var cardGroups = new Dictionary<char, int>
         {
-            count[i] = HowManyOfThisCard(hand, cardTypes[i]);
+            { '2', 0 },
+            { '3', 0 },
+            { '4', 0 },
+            { '5', 0 },
+            { '6', 0 },
+            { '7', 0 },
+            { '8', 0 },
+            { '9', 0 },
+            { 'T', 0 },
+            { 'J', 0 },
+            { 'Q', 0 },
+            { 'K', 0 },
+            { 'A', 0 }
+        };
+        foreach (char card in _cards)
+        {
+            cardGroups[card]++;
         }
-        return count;
+        return cardGroups;
     }
-
-    private static int HowManyOfThisCard(Hand hand, char card)
-    {
-        string regexPattern = "[^" + card + "]*";
-        return Regex.Replace(hand.Cards, regexPattern, "").Length;
-    }
-
 }
