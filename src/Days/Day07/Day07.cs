@@ -4,23 +4,23 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
 
 {
     protected override int Id => 7;
-    private static List<Hand> ParseInput(StreamReader input)
+    private static List<Hand> ParseInput(StreamReader input, HandFactory handFactory)
     {
         List<Hand> hands = [];
         while (!input.EndOfStream)
         {
             string[] handAndBid = input.ReadLine().Split(" ");
             // Store as base 15 so that comparisons later are easier
-            hands.Add(new Hand(handAndBid[0], int.Parse(handAndBid[1])));
+            hands.Add(handFactory.CreateHand(handAndBid[0], int.Parse(handAndBid[1])));
         }
         return hands;
     }
 
     protected override List<Hand> ParseInputPart1(StreamReader input) =>
-        ParseInput(input);
+        ParseInput(input, new JacksHandFactory());
 
     protected override List<Hand> ParseInputPart2(StreamReader input) =>
-        ParseInput(input);
+        ParseInput(input, new JokersHandFactory());
 
     protected override int SolvePart1(List<Hand> hands)
     {

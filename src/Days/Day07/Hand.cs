@@ -1,11 +1,12 @@
 namespace AOC2023.Days.Day07;
 
-public class Hand: IComparable<Hand>
+public abstract class Hand: IComparable<Hand>
 {
     private readonly string _cards;
     public int Bid { get; }
     private readonly int _handValue;
-    public Hand(string cards, int bid)
+
+    protected Hand(string cards, int bid)
     {
         _cards = cards;
         Bid = bid; 
@@ -24,29 +25,31 @@ public class Hand: IComparable<Hand>
             .Replace("J", "B")
             .Replace("T", "A");
         // Prepend hand type as a letter so get a single integer representing hand value.
-        char handType = GetHandType();
+        char handType = (char)AssignHandType();
         cardsBase14 = handType + cardsBase14;
         // just convert to base 16 since there's a built-in method
         int handValue = Convert.ToInt32(cardsBase14, 16);
         return handValue;
     }
 
-    private char GetHandType()
+    private HandType AssignHandType() =>
+        CheckMaxHandType(CountCards());
+
+    private static HandType CheckMaxHandType(Dictionary<char, int> countedCards)
     {
-        Dictionary<char, int> duplicatesList = CountCardGroups();
         // Need to track pairs and three of a kind until all the way through the duplicates list to make
         // sure there aren't any full houses.
         bool containsPair = false;
         bool containsTwoPair = false;
         bool containsThreeOfAKind = false;
-        foreach(int count in duplicatesList.Values)
+        foreach(int count in countedCards.Values)
         {
             switch (count)
             {
                 case 5:
-                    return (char)HandType.FiveOfAKind;
+                    return HandType.FiveOfAKind;
                 case 4:
-                    return (char)HandType.FourOfAKind;
+                    return HandType.FourOfAKind;
                 case 3:
                     containsThreeOfAKind = true;
                     break;
@@ -61,23 +64,23 @@ public class Hand: IComparable<Hand>
         }
         if (containsPair && containsThreeOfAKind)
         {
-            return (char)HandType.FullHouse;
+            return HandType.FullHouse;
         }
         if (containsThreeOfAKind)
         {
-            return (char)HandType.ThreeOfAKind;
+            return HandType.ThreeOfAKind;
         }
         if (containsTwoPair)
         {
-            return (char)HandType.TwoPair;
+            return HandType.TwoPair;
         }
 
         if (containsPair)
         {
-            return (char)HandType.Pair;
+            return HandType.Pair;
         }
 
-        return (char)HandType.HighCard;
+        return HandType.HighCard;
     }
 
     private enum HandType
@@ -91,9 +94,9 @@ public class Hand: IComparable<Hand>
         HighCard = '1'
     }
         
-    private Dictionary<char, int> CountCardGroups()
+    private Dictionary<char, int> CountCards()
     {
-        var cardGroups = new Dictionary<char, int>
+        var countedCards = new Dictionary<char, int>
         {
             { '2', 0 },
             { '3', 0 },
@@ -111,8 +114,8 @@ public class Hand: IComparable<Hand>
         };
         foreach (char card in _cards)
         {
-            cardGroups[card]++;
+            countedCards[card]++;
         }
-        return cardGroups;
+        return countedCards;
     }
 }
