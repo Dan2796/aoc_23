@@ -6,5 +6,4 @@ public class JokersHandFactory: HandFactory
     {
         return new JokersHand(cards, bid);
     }
-    
 }

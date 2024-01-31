@@ -3,6 +3,7 @@ namespace AOC2023.Days.Day07;
 public abstract class Hand: IComparable<Hand>
 {
     private readonly string _cards;
+
     public int Bid { get; }
     private readonly int _handValue;
 
@@ -93,7 +94,6 @@ public abstract class Hand: IComparable<Hand>
         Pair = '2',
         HighCard = '1'
     }
-        
     private Dictionary<char, int> CountCards()
     {
         var countedCards = new Dictionary<char, int>
