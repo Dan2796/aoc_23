@@ -24,6 +24,6 @@ public class Day07Tests
     public void Day07_ParseAndSolveP2_ReturnCorrectAnswer() 
     { 
         long result = _day.ParseAndSolveP2(_testInputStream);
-        //result.Should().Be();
+        result.Should().Be(5905);
     }
 }

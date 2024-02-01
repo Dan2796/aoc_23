@@ -22,7 +22,7 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     protected override List<Hand> ParseInputPart2(StreamReader input) =>
         ParseInput(input, new JokersHandFactory());
 
-    protected override int SolvePart1(List<Hand> hands)
+    private int RankAndSum(List<Hand> hands)
     {
         hands.Sort();
         int answerPart1 = 0;
@@ -35,7 +35,10 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
         return answerPart1;
     }
 
+    protected override int SolvePart1(List<Hand> hands) =>
+        RankAndSum(hands);
+
     protected override int SolvePart2(List<Hand> hands) =>
-        1;
+        RankAndSum(hands);
 
 }
