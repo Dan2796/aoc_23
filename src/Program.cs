@@ -11,7 +11,7 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-        int dayRequested = 0;
+        var dayRequested = 0;
         try
         {
             dayRequested = int.Parse(args[0]);

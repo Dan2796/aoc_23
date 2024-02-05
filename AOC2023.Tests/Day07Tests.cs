@@ -16,7 +16,7 @@ public class Day07Tests
     [Fact]
     public void Day07_ParseAndSolveP1_ReturnCorrectAnswer()
     { 
-        int result = _day.ParseAndSolveP1(_testInputStream);
+        var result = _day.ParseAndSolveP1(_testInputStream);
         result.Should().Be(6440);
     }
 

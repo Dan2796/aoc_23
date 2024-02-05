@@ -11,27 +11,38 @@ public abstract class Hand: IComparable<Hand>
         Cards = cards;
         Bid = bid; 
         _handValue = CalculateHandValue();
-}
+    }
+    
+    public static Hand CreateJacksHand(string cards, int bid) =>
+        new JacksHand(cards, bid);
+    public static Hand CreateJokersHand(string cards, int bid) =>
+        new JokersHand(cards, bid);
     
     public int CompareTo(Hand otherHand) =>
         _handValue.CompareTo(otherHand._handValue);
     
-    protected virtual int CalculateHandValue()
+    private int CalculateHandValue()
     {
-        string cardsBase14 = Cards
+        var cardsBase14 = AssignCharsForFaceCards(Cards);
+        // Prepend hand type as a letter so get a single integer representing hand value.
+        var handType = (char)AssignHandType();
+        cardsBase14 = handType + cardsBase14;
+        // just convert to base 16 since there's a built-in method
+        var handValue = Convert.ToInt32(cardsBase14, 16);
+        return handValue;
+    }
+
+    protected virtual string AssignCharsForFaceCards(string cards)
+    {
+        var replacedCards = cards
             .Replace("A", "E")
             .Replace("K", "D")
             .Replace("Q", "C")
             .Replace("J", "B")
             .Replace("T", "A");
-        // Prepend hand type as a letter so get a single integer representing hand value.
-        char handType = (char)AssignHandType();
-        cardsBase14 = handType + cardsBase14;
-        // just convert to base 16 since there's a built-in method
-        int handValue = Convert.ToInt32(cardsBase14, 16);
-        return handValue;
-    }
+        return replacedCards;
 
+    }
     protected virtual HandType AssignHandType() =>
         CheckMaxHandType(CountCards());
 
@@ -39,10 +50,10 @@ public abstract class Hand: IComparable<Hand>
     {
         // Need to track pairs and three of a kind until all the way through the duplicates list to make
         // sure there aren't any full houses.
-        bool containsPair = false;
-        bool containsTwoPair = false;
-        bool containsThreeOfAKind = false;
-        foreach(int count in countedCards.Values)
+        var containsPair = false;
+        var containsTwoPair = false;
+        var containsThreeOfAKind = false;
+        foreach(var count in countedCards.Values)
         {
             switch (count)
             {
@@ -112,63 +123,10 @@ public abstract class Hand: IComparable<Hand>
             { 'K', 0 },
             { 'A', 0 }
         };
-        foreach (char card in Cards)
+        foreach (var card in Cards)
         {
             countedCards[card]++;
         }
         return countedCards;
     }
-}
-
-public class JacksHand(string cards, int bid) : Hand(cards, bid);
-
-public class JokersHand(string cards, int bid) : Hand(cards, bid)
-{
-    protected override HandType AssignHandType()
-    {
-        Dictionary<char, int> cardCount = CountCards();
-        int jokersNumber = cardCount['J'];
-        // get rid of jokers from the dictionary before getting the hand type
-        cardCount.Remove('J');
-        HandType baseHandType = CheckMaxHandType(cardCount);
-        for (int i = 0; i < jokersNumber; i++)
-        {
-            baseHandType = ApplyJoker(baseHandType);
-        }
-        return baseHandType;
-    } 
-    private static HandType ApplyJoker(HandType oldHandType){
-        switch (oldHandType)
-        {
-            case HandType.HighCard:
-                return HandType.Pair;
-            case HandType.Pair:
-                return HandType.ThreeOfAKind;
-            case HandType.TwoPair:
-                return HandType.FullHouse;
-            case HandType.ThreeOfAKind:
-                return HandType.FourOfAKind;
-            case HandType.FullHouse:
-                return HandType.FourOfAKind;
-        }
-
-        return HandType.FiveOfAKind; 
-    }
-    
-    protected override int CalculateHandValue()
-         {
-             string cardsBase14 = Cards
-                 .Replace("A", "E")
-                 .Replace("K", "D")
-                 .Replace("Q", "C")
-                 // now J is lowest
-                 .Replace("J", "1")
-                 .Replace("T", "A");
-             // Prepend hand type as a letter so get a single integer representing hand value.
-             char handType = (char)AssignHandType();
-             cardsBase14 = handType + cardsBase14;
-             // just convert to base 16 since there's a built-in method
-             int handValue = Convert.ToInt32(cardsBase14, 16);
-             return handValue;
-         }
 }
