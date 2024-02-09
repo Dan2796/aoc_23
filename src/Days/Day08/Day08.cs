@@ -10,7 +10,7 @@ public class Day08 : Day<CamelMaps, int, CamelMaps, int>
     private static readonly Regex irrelevantCharacters = new Regex(@"[^A-Z,=]");
     private static CamelMaps ParseInput(StreamReader input)
     {
-        string leftRightSequence = input.ReadLine();
+        string lRSequence = input.ReadLine();
         // skip line which is empty:
         input.ReadLine();
         Dictionary<string, (string, string)> mappings = new();
@@ -22,13 +22,14 @@ public class Day08 : Day<CamelMaps, int, CamelMaps, int>
                 .Split(",");
             mappings.Add(mapping[0], (mapping[1], mapping[2]));
         }
-        CamelMaps camelMaps = new(leftRightSequence, mappings);
+        CamelMaps camelMaps = new(lRSequence, mappings);
         return camelMaps;
     }
     protected override CamelMaps ParseInputPart1(StreamReader input) =>
         ParseInput(input);
     protected override CamelMaps ParseInputPart2(StreamReader input) =>
         ParseInput(input);
-    protected override int SolvePart1(CamelMaps camelMaps) => 0;
+    protected override int SolvePart1(CamelMaps camelMaps) => 
+        camelMaps.followMaps();
     protected override int SolvePart2(CamelMaps camelMaps) => 0;
 }

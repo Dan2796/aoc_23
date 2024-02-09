@@ -29,16 +29,14 @@ public class Day08Tests
     public void Day08_ParseAndSolveP1_ReturnCorrectAnswerTest1()
     { 
         var result = _day.ParseAndSolveP1(_testInputStream1);
-        result.Should().Be(0);
-        //result.Should().Be(2);
+        result.Should().Be(2);
     }
     
     [Fact]
     public void Day08_ParseAndSolveP1_ReturnCorrectAnswerTest2()
     { 
         var result = _day.ParseAndSolveP1(_testInputStream2);
-        result.Should().Be(0);
-        //result.Should().Be(6);
+        result.Should().Be(6);
     }
 
     [Fact]
