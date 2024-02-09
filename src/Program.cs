@@ -61,7 +61,7 @@ internal class Program
                 day07.CompletePart2("Inputs/Day07.txt");
                 break;
             case 8:
-                Day<CamelMaps, int, CamelMaps, int> day08 = new Day08();
+                Day<CamelMaps, int, CamelMaps, long> day08 = new Day08();
                 day08.CompletePart1("Inputs/Day08.txt");
                 day08.CompletePart2("Inputs/Day08.txt");
                 break;

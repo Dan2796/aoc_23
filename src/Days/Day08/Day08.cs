@@ -2,12 +2,12 @@ using System.Text.RegularExpressions;
 
 namespace AOC2023.Days.Day08;
 
-public class Day08 : Day<CamelMaps, int, CamelMaps, int>
+public class Day08 : Day<CamelMaps, int, CamelMaps, long>
 {
     protected override int Id => 8;
 
-    // only want to keep capital letters, commas and equals sign
-    private static readonly Regex irrelevantCharacters = new Regex(@"[^A-Z,=]");
+    // only want to keep numbers, capital letters, commas and equals sign
+    private static readonly Regex irrelevantCharacters = new Regex(@"[^A-Z,=0-9]");
     private static CamelMaps ParseInput(StreamReader input)
     {
         string lRSequence = input.ReadLine();
@@ -30,6 +30,7 @@ public class Day08 : Day<CamelMaps, int, CamelMaps, int>
     protected override CamelMaps ParseInputPart2(StreamReader input) =>
         ParseInput(input);
     protected override int SolvePart1(CamelMaps camelMaps) => 
-        camelMaps.followMaps();
-    protected override int SolvePart2(CamelMaps camelMaps) => 0;
+        camelMaps.FollowMaps();
+    protected override long SolvePart2(CamelMaps camelMaps) =>
+        camelMaps.FollowAsIfGhost();
 }

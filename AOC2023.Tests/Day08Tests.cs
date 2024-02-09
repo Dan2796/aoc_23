@@ -19,11 +19,23 @@ public class Day08Tests
                                       "\n" +
                                       "AAA = (BBB, BBB)\n" +
                                       "BBB = (AAA, ZZZ)\n" +
-                                      "ZZZ = (ZZZ, ZZZ) \n";
+                                      "ZZZ = (ZZZ, ZZZ)\n";
+
+    private const string TestInput3 = "LR\n" +
+                                      "\n" + 
+                                      "11A = (11B, XXX)\n" +
+                                      "11B = (XXX, 11Z)\n" +
+                                      "11Z = (11B, XXX)\n" +
+                                      "22A = (22B, XXX)\n" +
+                                      "22B = (22C, 22C)\n" +
+                                      "22C = (22Z, 22Z)\n" +
+                                      "22Z = (22B, 22B)\n" +
+                                      "XXX = (XXX, XXX)\n";
     
     private readonly Day08 _day = new();
     private readonly StreamReader _testInputStream1 = MethodsForTesting.StringToStreamReader(TestInput1);
     private readonly StreamReader _testInputStream2 = MethodsForTesting.StringToStreamReader(TestInput2);
+    private readonly StreamReader _testInputStream3 = MethodsForTesting.StringToStreamReader(TestInput3);
     
     [Fact]
     public void Day08_ParseAndSolveP1_ReturnCorrectAnswerTest1()
@@ -42,7 +54,7 @@ public class Day08Tests
     [Fact]
     public void Day08_ParseAndSolveP2_ReturnCorrectAnswer() 
     { 
-        long result = _day.ParseAndSolveP2(_testInputStream1);
-        result.Should().Be(0);
+        long result = _day.ParseAndSolveP2(_testInputStream3);
+        result.Should().Be(6);
     }
 }
