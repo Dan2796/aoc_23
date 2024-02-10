@@ -1,6 +1,6 @@
 namespace AOC2023.Days.Day09;
 
-public class Day09: Day<List<List<int>>, int, List<string>, int>
+public class Day09: Day<List<List<int>>, int, List<List<int>>, int>
 {
     protected override int Id => 9;
     protected override List<List<int>> ParseInputPart1(StreamReader input)
@@ -13,12 +13,18 @@ public class Day09: Day<List<List<int>>, int, List<string>, int>
         return sequences;
     }
 
-    protected override int SolvePart1(List<List<int>> input)
-    {
-        return input.Sum(GetNextInSequence);
-    }
+    protected override int SolvePart1(List<List<int>> input) =>
+        input.Sum(x => GetItemInSequence(x, (seq, y) => seq[^1] + y));
 
-    private static int GetNextInSequence(List<int> sequence)
+    protected override List<List<int>> ParseInputPart2(StreamReader input) =>
+        ParseInputPart1(input);
+
+    protected override int SolvePart2(List<List<int>> input) =>
+        input.Sum(x => GetItemInSequence(x, (seq, y) => seq[0] - y));
+
+    private delegate int NextItemChooser(List<int> sequence, int nextItemOfDiffs);
+
+    private static int GetItemInSequence(List<int> sequence, NextItemChooser nextItemChooser)
     {
         if (sequence.All(x => x == 0))
         {
@@ -29,16 +35,6 @@ public class Day09: Day<List<List<int>>, int, List<string>, int>
         {
             differences.Add(sequence[i + 1] - sequence[i]);
         }
-        return sequence[^1] + GetNextInSequence(differences);
-    }
-
-    protected override List<string> ParseInputPart2(StreamReader input)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override int SolvePart2(List<string> input)
-    {
-        throw new NotImplementedException();
+        return nextItemChooser(sequence, GetItemInSequence(differences, nextItemChooser));
     }
 }

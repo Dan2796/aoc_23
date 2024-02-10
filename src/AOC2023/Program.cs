@@ -68,8 +68,8 @@ internal class Program
                 break;
             case 9:
                 var day09 = new Day09();
-                day09.CompletePart1("Inputs/Day08.txt");
-                day09.CompletePart2("Inputs/Day08.txt");
+                day09.CompletePart1("Inputs/Day09.txt");
+                day09.CompletePart2("Inputs/Day09.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);

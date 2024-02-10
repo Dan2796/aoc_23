@@ -12,9 +12,15 @@ public class Day09Test
     private readonly StreamReader _testInputStream = MethodsForTesting.StringToStreamReader(TestInput);
     
     [Fact]
-    public void Day09_()
+    public void ParseAndSolveP1_ReturnsSumNextInSequence()
     {
         var result = _day.ParseAndSolveP1(_testInputStream);
         result.Should().Be(114);
+    }
+    [Fact]
+    public void ParseAndSolveP2_ReturnsSumPreviousInSequence()
+    {
+        var result = _day.ParseAndSolveP2(_testInputStream);
+        result.Should().Be(2);
     }
 }
