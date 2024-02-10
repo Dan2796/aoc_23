@@ -15,6 +15,6 @@ public class Day09Test
     public void Day09_()
     {
         var result = _day.ParseAndSolveP1(_testInputStream);
-        result.Should().Be(2);
+        result.Should().Be(114);
     }
 }
