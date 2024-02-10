@@ -5,6 +5,7 @@ using AOC2023.Days.Day05;
 using AOC2023.Days.Day06;
 using AOC2023.Days.Day07;
 using AOC2023.Days.Day08;
+using AOC2023.Days.Day09;
 
 namespace AOC2023;
 
@@ -56,7 +57,7 @@ internal class Program
                 day06.CompletePart2("Inputs/Day06.txt");
                 break;
             case 7:
-                Day<List<Hand>, int, List<Hand>, int> day07 = new Day07();
+                var day07 = new Day07();
                 day07.CompletePart1("Inputs/Day07.txt");
                 day07.CompletePart2("Inputs/Day07.txt");
                 break;
@@ -64,6 +65,11 @@ internal class Program
                 Day<CamelMaps, int, CamelMaps, long> day08 = new Day08();
                 day08.CompletePart1("Inputs/Day08.txt");
                 day08.CompletePart2("Inputs/Day08.txt");
+                break;
+            case 9:
+                var day09 = new Day09();
+                day09.CompletePart1("Inputs/Day08.txt");
+                day09.CompletePart2("Inputs/Day08.txt");
                 break;
             default:
                 Console.WriteLine("Sorry, I haven't yet completed day " + dayRequested);

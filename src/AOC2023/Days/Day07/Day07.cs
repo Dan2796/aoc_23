@@ -1,12 +1,12 @@
 namespace AOC2023.Days.Day07;
 
-public class Day07: Day<List<Hand>, int, List<Hand>, int>
+public class Day07: Day<List<Hand>, int, List<JokersHand>, int>
 
 {
     protected override int Id => 7;
-    private static List<Hand> ParseInput(StreamReader input, Func<string, int, Hand> handCreator) 
+    private static List<T> ParseInput<T>(StreamReader input, Func<string, int, T> handCreator) where T : Hand
     {
-        List<Hand> hands = [];
+        List<T> hands = [];
         while (!input.EndOfStream)
         {
             string[] handAndBid = input.ReadLine().Split(" ");
@@ -19,8 +19,8 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     protected override List<Hand> ParseInputPart1(StreamReader input) =>
         ParseInput(input, Hand.CreateJacksHand);
 
-    protected override List<Hand> ParseInputPart2(StreamReader input) =>
-        ParseInput(input, Hand.CreateJokersHand);
+    protected override List<JokersHand> ParseInputPart2(StreamReader input) =>
+        ParseInput(input, (s, i) => new JokersHand(s, i));
 
     private int RankAndSum(List<Hand> hands)
     {
@@ -38,6 +38,6 @@ public class Day07: Day<List<Hand>, int, List<Hand>, int>
     protected override int SolvePart1(List<Hand> hands) =>
         RankAndSum(hands);
 
-    protected override int SolvePart2(List<Hand> hands) =>
-        RankAndSum(hands);
+    protected override int SolvePart2(List<JokersHand> hands) =>
+        RankAndSum(hands.Cast<Hand>().ToList());
 }

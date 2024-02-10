@@ -4,10 +4,10 @@ public class CamelMaps(string lRSequence, Dictionary<string, (string, string)> m
 {
     public int FollowMaps()
     {
-        string currentPosition = lRSequence[0] == 'L' ? mappings["AAA"].Item1 : mappings["AAA"].Item2;
+        string currentPosition = "AAA";// lRSequence[0] == 'L' ? mappings["AAA"].Item1 : mappings["AAA"].Item2;
         // start steps at 1 since first step sis AAA to something, likewise placeInLRSequence
-        int numberOfSteps = 1;
-        int placeInLrSequence = 1;
+        int numberOfSteps = 0;
+        int placeInLrSequence = 0;
         while (currentPosition != "ZZZ")
         {
             currentPosition = lRSequence[placeInLrSequence] == 'L' 
@@ -30,7 +30,7 @@ public class CamelMaps(string lRSequence, Dictionary<string, (string, string)> m
 
     private List<long> GetMultiples(string position)
     {
-        HashSet<string> visited = [];
+        var visited = new HashSet<string>();
         int step = 0;
         int placeInLrSequence = 0;
         List<long> multiples = [];
@@ -56,7 +56,7 @@ public class CamelMaps(string lRSequence, Dictionary<string, (string, string)> m
      IEnumerable<IEnumerable<T>> result = 
        new[] { Enumerable.Empty<T>() };
      return sequences.Aggregate(result, (current, s) =>
-         from seq in current from item in s select seq.Concat(new[] { item })); 
+         current.SelectMany(seq => s, (seq, item) => seq.Concat(new[] { item }))); 
    } 
 
     public static long CalcLCM(IEnumerable<long> multiples)
